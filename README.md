@@ -1,3 +1,5 @@
+<img src="thumbnail.png" alt="DriveManagerScript Logo" width="200">
+
 # Google Apps Script for File Management and Organization in Google Drive
 
 This project contains a set of Google Apps Script functions designed to help manage and organize files within Google Drive. The main features of this script include:
