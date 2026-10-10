@@ -2,21 +2,36 @@
 
 # Google Apps Script for File Management and Organization in Google Drive
 
-This project contains a set of Google Apps Script functions designed to help manage and organize files within Google Drive. The main features of this script include:
+Google Apps Script functions that list, sort and clean up files in Google Drive.
 
-- **File Listing**: Generates a Google Sheet that lists all files within a specified folder, including subfolders, along with details like file size (in MB), file type, creation date, and media playtime (for audio/video files).
-- **File Organization**: Moves files into designated folders within Google Drive based on keywords in their file names, allowing for quick and efficient file sorting.
-- **Empty Folder Cleanup**: Recursively checks for and deletes empty folders within a specified directory, keeping your Drive clean and organized.
+## Scripts
 
-## How to Use
+| File | Entry function | What it does |
+|------|----------------|--------------|
+| `ListAll2Sheet.gs` | `listAllFilesInFolderAndSubfolders` | Writes every file in a folder and its subfolders to one sheet: name, ID and path. |
+| `ListByFolder2Sheet.gs` | `listAllFilesToSheet` | Creates a spreadsheet with one sheet per folder. Columns: name, ID, URL, size in MB, type, date created and playtime in seconds for audio and video. |
+| `Arrange.gs` | `moveFilesBasedOnWildcardKeywords` | Moves files into folders under "Subject Wise" based on keywords in the file name. |
+| `ArrangeWithSortCheck.gs` | `moveFilesWithCustomSettings` | Same as above, with a flag (`sortInsideSubjectWise`) to also sort files that are already inside "Subject Wise". |
+| `CleanUp.gs` | `deleteEmptyFolders` | Moves empty folders to the trash, starting from a folder you choose. |
 
-1. **Set Up**: Open Google Apps Script, paste the code from this repository, and replace placeholders (like folder IDs) as needed.
-2. **Run the Script**: Use the functions to list files in a new Google Sheet, sort files based on specific keywords, or clean up empty folders in your Drive.
-3. **Customize**: Modify the script to fit specific file management needs or integrate additional Drive features.
+## Setup
 
-This repository serves as an educational resource for file automation using Google Apps Script. Contributions and suggestions for improvement are welcome! 
+1. Open [script.google.com](https://script.google.com) and create a project.
+2. Copy the `.gs` files you need into the project. To use `clasp` instead, run `clasp clone <your script ID>` or point `.clasp.json` at your own project.
+3. In each script, replace `YOUR_PRIMARY_FOLDER_ID` with the ID of your folder. The ID is the last part of the folder URL in Drive.
+4. For playtime in `ListByFolder2Sheet.gs`, turn on the Drive advanced service (Drive API v3). `appsscript.json` already lists it.
+5. In the editor, pick the entry function from the table and click Run. Google asks you to authorise the script the first time.
 
----
+## Customise
 
-Let me know if there’s anything specific you’d like to add or adjust.
-Google Drive Scripts in Google App Scripts to arrange, cleanup and list all files
+- The arrange scripts use a `folderMappings` object. Each key is a keyword to look for in the file name (lower case), and each value is the target folder name. Edit it to match your files.
+- The arrange scripts expect a folder named "Subject Wise" inside your primary folder.
+- The sheet names in the list scripts are examples. Change them in the code.
+
+## Warning
+
+`CleanUp.gs` moves empty folders to the trash, and the arrange scripts move files. Try them on a test folder first. Trashed items can be restored from Drive's trash.
+
+## License
+
+[MIT](LICENSE)
